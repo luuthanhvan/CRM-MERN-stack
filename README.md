@@ -1,0 +1,124 @@
+# Customer Relationship Management Web Application
+
+# Environment setup
+
+## Ubuntu 18.04
+
+### Install Node.js and Angular
+
+1. Install Node.js through nvm (Node Version Manager)
+- Access the nvm repository: https://github.com/nvm-sh/nvm
+- Copy the cURL command in "Install & Update script" and run it in your terminal.
+- See all Node.js version by nvm: `nvm list-remote`
+- Install the a specific Node.js version using nvm: `nvm [node.js version]`. Example, if you want to install node.js version v14.17.0, you will run the command: `nvm v14.17.0`
+- Check the installation
+```
+node --version # or node -v
+npm --version # or npm -v
+```
+
+2. Install angular-cli through npm (Node Package Manager)
+```npm install -g @angular/cli@8.1.0```
+
+### Install MongoDB Server
+- Download here (choose Platform Ubuntu 18.04): https://www.mongodb.com/try/download/community
+- Check the installation: open your terminal and run `mongo`
+
+## Windows
+
+### Install Node.js and Angular
+
+1. Node.js
+- Download Node.js here (choose Windows Installer): https://nodejs.org/en/download/
+- Check the installation
+```
+node --version # or node -v
+npm --version # or npm -v
+```
+
+2. Angular
+- Install angular-cli: `npm install -g @angular/cli@8.1.0`
+- Check the installation: `ng --version`
+
+### Install MongoDB Server
+- Download here (choose Platform Windows): https://www.mongodb.com/try/download/community
+- Add Mongo’s bin folder to the Path Environment Variable: https://dangphongvanthanh.wordpress.com/2017/06/12/add-mongos-bin-folder-to-the-path-environment-variable/
+- Check the installation: open your terminal and run `mongo`
+
+# Run the project
+
+## Preparing
+
+### Ubuntu 18.04
+- Open the terminal and run: `npm install`
+- Rename `.env_example` file to `.env`: `cp .env_example .env`
+
+### Windows
+- Open the terminal and run: `npm install`
+- Rename `.env_example` file to `.env`
+- Create a new folder named "data" in server directory for MongoDB data store directory. Then, run the command in your terminal: `mongod --dbpath [your_absolute_path_to_project/server/data]`. Example: `mongod --dbpath "D:\MEAN-stack\server\data"`
+
+## Running
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
