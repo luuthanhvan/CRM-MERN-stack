@@ -122,3 +122,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Create a new workspace
+
+## Create a new project
+```
+cd your_dir
+npx create-react-app your-project-name
+```
+1. Dependencies for ReactJS
+```
+npm install bootstrap
+npm install jquery popper.js
+npm i bootstrap-icons
+npm install node-sass
+```

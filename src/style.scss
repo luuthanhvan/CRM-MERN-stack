@@ -1,0 +1,16 @@
+// import Bootstrap 5 Sass source stylesheet in order to use Bootstrap 5 as Sass
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+// import the customize scss
+@import './scss/custom.scss';
+
+body {
+	margin: 0;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.content-containter {
+	background-color: $background;
+}
