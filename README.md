@@ -2,11 +2,11 @@
 
 # Environment setup
 
-## Ubuntu 18.04
+## Install Node.js 
 
-### Install Node.js and Angular
+### Ubuntu 18.04
 
-1. Install Node.js through nvm (Node Version Manager)
+Install Node.js through nvm (Node Version Manager)
 - Access the nvm repository: https://github.com/nvm-sh/nvm
 - Copy the cURL command in "Install & Update script" and run it in your terminal.
 - See all Node.js version by nvm: `nvm list-remote`
@@ -17,18 +17,8 @@ node --version # or node -v
 npm --version # or npm -v
 ```
 
-2. Install angular-cli through npm (Node Package Manager)
-```npm install -g @angular/cli@8.1.0```
+### Windows
 
-### Install MongoDB Server
-- Download here (choose Platform Ubuntu 18.04): https://www.mongodb.com/try/download/community
-- Check the installation: open your terminal and run `mongo`
-
-## Windows
-
-### Install Node.js and Angular
-
-1. Node.js
 - Download Node.js here (choose Windows Installer): https://nodejs.org/en/download/
 - Check the installation
 ```
@@ -36,27 +26,11 @@ node --version # or node -v
 npm --version # or npm -v
 ```
 
-2. Angular
-- Install angular-cli: `npm install -g @angular/cli@8.1.0`
-- Check the installation: `ng --version`
-
-### Install MongoDB Server
-- Download here (choose Platform Windows): https://www.mongodb.com/try/download/community
-- Add Mongo’s bin folder to the Path Environment Variable: https://dangphongvanthanh.wordpress.com/2017/06/12/add-mongos-bin-folder-to-the-path-environment-variable/
-- Check the installation: open your terminal and run `mongo`
-
 # Run the project
 
 ## Preparing
 
-### Ubuntu 18.04
-- Open the terminal and run: `npm install`
-- Rename `.env_example` file to `.env`: `cp .env_example .env`
-
-### Windows
-- Open the terminal and run: `npm install`
-- Rename `.env_example` file to `.env`
-- Create a new folder named "data" in server directory for MongoDB data store directory. Then, run the command in your terminal: `mongod --dbpath [your_absolute_path_to_project/server/data]`. Example: `mongod --dbpath "D:\MEAN-stack\server\data"`
+Open the terminal and run: `npm install`
 
 ## Running
 
@@ -134,6 +108,7 @@ npx create-react-app your-project-name
 ```
 npm install bootstrap
 npm install jquery popper.js
-npm i bootstrap-icons
 npm install node-sass
+npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+
 ```
