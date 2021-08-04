@@ -11,6 +11,47 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.content-containter {
-	background-color: $background;
+.content-containter{
+    width: calc(100% - 288px);
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 48px;
+    left: 291px;
+    background-color: $background;
+	
+	.title {
+		// background-color: $content-background;
+		height: 48px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		// border: 1px solid $border-color;
+		
+		span {
+			color: #128474;
+			font-weight: normal;
+			font-size: 22px;
+			padding-left: 24px;
+		}
+	}
+
+	.content {
+		table {
+			height: 100%;
+			
+			thead {
+				th {
+					// remove the first line of the table
+					border: none;
+				}
+			}
+
+			tbody{
+				background-color: $content-background;
+				border-top: 1px solid $border-color;
+				border-bottom: 1px solid $border-color;
+				margin-left: 24px;
+			}
+		}
+	}
 }

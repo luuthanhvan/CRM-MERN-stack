@@ -1,6 +1,5 @@
 @import '../../scss/custom.scss';
 
-/* NAVIGATION BAR */
 .navbar-containter{
     left: 291px;
     width: calc(100% - 291px);
@@ -19,7 +18,6 @@
         padding-bottom: 8px;
     }
 }
-
 
 .sidebar-container {
     width: 304px;
@@ -49,9 +47,14 @@
         background: $sidebar-background;
         height: 100%;
         position: absolute;
+
         ul {
             list-style: none;
             padding: 0px;
+
+            .text-link {
+                text-decoration: none;
+            }
         }
 
         .search {

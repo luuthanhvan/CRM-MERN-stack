@@ -110,5 +110,5 @@ npm install bootstrap
 npm install jquery popper.js
 npm install node-sass
 npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
-
+npm install react-router-dom
 ```

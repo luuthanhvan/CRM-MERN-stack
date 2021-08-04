@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressBook, faBars, faFileInvoiceDollar, faTachometerAlt, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import './Home.scss';
+import {NavLink} from 'react-router-dom';
 
 function SideBar() {
     return(
@@ -21,39 +22,47 @@ function SideBar() {
 
                     <div className='menu'>
                         <li>
-                            <div className='row'>
-                                <div className='col-sm-2 icon'>
-                                    <FontAwesomeIcon className='col-sm-2 icon' icon={faTachometerAlt}/>
+                            <NavLink to='/dashboard' className='text-link'>
+                                <div className='row'>
+                                    <div className='col-sm-2 icon'>
+                                        <FontAwesomeIcon className='col-sm-2 icon' icon={faTachometerAlt}/>
+                                    </div>
+                                    <span className='col-sm-4'>Dashboard</span>
                                 </div>
-                                <span className='col-sm-4'>Dashboard</span>
-                            </div>
+                            </NavLink>
                         </li>
 
                         <li>
-                            <div className='row'>
-                                <div className='col-sm-2 icon'>
-                                    <FontAwesomeIcon className='col-sm-2 icon' icon={faAddressBook}/>
+                            <NavLink to='/contacts' className='text-link'>
+                                <div className='row'>
+                                    <div className='col-sm-2 icon'>
+                                        <FontAwesomeIcon className='col-sm-2 icon' icon={faAddressBook}/>
+                                    </div>
+                                    <span className='col-sm-4'>Contacts</span>
                                 </div>
-                                <span className='col-sm-4'>Contacts</span>
-                            </div>
+                            </NavLink>
                         </li>
 
                         <li>
-                            <div className='row'>
-                                <div className='col-sm-2 icon'>
-                                    <FontAwesomeIcon className='col-md-2 icon' icon={faFileInvoiceDollar}/>
+                            <NavLink to='/sales_order' className='text-link'>
+                                <div className='row'>
+                                    <div className='col-sm-2 icon'>
+                                        <FontAwesomeIcon className='col-md-2 icon' icon={faFileInvoiceDollar}/>
+                                    </div>
+                                    <span className='col-md-4'>Sales order</span>
                                 </div>
-                                <span className='col-md-4'>Sales order</span>
-                            </div>
+                            </NavLink>
                         </li>
 
                         <li>
-                            <div className='row'>
-                                <div className='col-sm-2 icon'>
-                                    <FontAwesomeIcon className='col-sm-2 icon' icon={faUser}/>
+                            <NavLink to='/user_management' className='text-link'>
+                                <div className='row'>
+                                    <div className='col-sm-2 icon'>
+                                        <FontAwesomeIcon className='col-sm-2 icon' icon={faUser}/>
+                                    </div>
+                                    <span className='col-sm-4'>User management</span>
                                 </div>
-                                <span className='col-sm-4'>User management</span>
-                            </div>
+                            </NavLink>
                         </li>
                     </div>
                 </ul>
