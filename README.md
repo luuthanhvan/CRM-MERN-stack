@@ -106,9 +106,11 @@ npx create-react-app your-project-name
 ```
 1. Dependencies for ReactJS
 ```
-npm install bootstrap
-npm install jquery popper.js
-npm install node-sass
-npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
-npm install react-router-dom
+npm install --save bootstrap
+npm install --save jquery popper.js
+npm install --save node-sass
+npm install --save @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+npm install --save react-router-dom
+npm install --save bootstrap-daterangepicker moment
+npm install --save react-bootstrap-daterangepicker
 ```

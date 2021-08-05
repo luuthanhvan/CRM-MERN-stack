@@ -38,7 +38,7 @@ function SideBar() {
                                     <div className='col-sm-2 icon'>
                                         <FontAwesomeIcon className='col-sm-2 icon' icon={faAddressBook}/>
                                     </div>
-                                    <span className='col-sm-4'>Contacts</span>
+                                    <span className='col-sm-4'>Contact</span>
                                 </div>
                             </NavLink>
                         </li>

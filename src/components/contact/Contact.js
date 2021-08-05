@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import $ from 'jquery';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import 'bootstrap-daterangepicker/daterangepicker.css';
 
 function Contact() {
     const leadSources = ['Existing Customer', 'Partner', 'Conference', 'Website', 'Word of mouth', 'Other'];
@@ -7,44 +10,59 @@ function Contact() {
 
     return(
         <div>
-            <div className='row'>
-                <div className='col title'>
+            <div className='row content-header'>
+                <div className='col-md-2 title'>
                     <span>Contact</span>
                 </div>
      
                 <div className='col filter'>
-                    <select class="form-select form-select-sm">
-                        <option selected>Lead source</option>
+                    <span>Lead source</span>
+                    <select className="form-select form-select-sm">
+                        {/* <option>Lead source</option> */}
                         {/* array iteration */}
-                        {leadSources.map(item => <option>{item}</option>)}
+                        {/* Warning: Each child in a list should have a unique "key" prop. */}
+                        {/* Fix: add key prop in option tag */}
+                        {leadSources.map((item) => <option key={Math.random()}>{item}</option>)}
                     </select>
                 </div>
 
                 <div className='col filter'>
-                    <select class="form-select form-select-sm">
-                        <option selected>Assigned to</option>
+                    <span>Assigned to</span>
+                    <select className="form-select form-select-sm">
+                        {/* <option>Assigned to</option> */}
                     </select>
                 </div>
 
-                <div className='col filter'>
-                    {/* Created date range */}
+                <div className='col-md-2 filter'>
+                    <span>Created date</span>
+                    <DateRangePicker>
+                        <input type="text" className="form-control"/>
+                    </DateRangePicker>
                 </div>
 
-                <div className='col filter'>
-                    {/* Updated date range */}
+                <div className='col-md-2 filter'>
+                    <span>Updated date</span>
+                    <DateRangePicker>
+                        <input type="text" className="form-control" />
+                    </DateRangePicker>
+                </div>
+
+                <div className='col-md-2 filter'>
+                    <span>Keyword filter</span>
+                    <input type="text" className="form-control search-text" placeholder='Enter text...'/>
                 </div>
   
-                <div className='col'>
+                <div className='col add-btn'>
                     <button><FontAwesomeIcon className='col-sm-2 icon' icon={faPlus}/></button>
                 </div>
             </div>
 
-            <div class='content'>
-                <table class="table">
+            <div className='content'>
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            {displayCols.map(item => <th scope="col">{item}</th>)}
+                            {displayCols.map(item => <th scope="col" key={Math.random()}>{item}</th>)}
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -59,9 +77,11 @@ function Contact() {
                             <td>Mrs</td>
                             <td>Other</td>
                             <td>Thanh Van</td>
-                            <td>Mrs</td>
-                            <td>Other</td>
-                            <td><FontAwesomeIcon className='col-sm-2 icon' icon={faEllipsisH}/></td>
+                            <td>05/08/2021</td>
+                            <td>05/08/2021</td>
+                            <td>
+                                <button><FontAwesomeIcon className='col-sm-2 icon' icon={faEllipsisH}/></button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
