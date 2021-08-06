@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 // import $ from 'jquery';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import {NavLink} from 'react-router-dom';
 
 function Contact() {
     const leadSources = ['Existing Customer', 'Partner', 'Conference', 'Website', 'Word of mouth', 'Other'];
@@ -53,7 +54,9 @@ function Contact() {
                 </div>
   
                 <div className='col add-btn'>
-                    <button><FontAwesomeIcon className='col-sm-2 icon' icon={faPlus}/></button>
+                    <NavLink to='/contact/create'>
+                        <button><FontAwesomeIcon className='icon' icon={faPlus}/></button>
+                    </NavLink>
                 </div>
             </div>
 
@@ -80,7 +83,17 @@ function Contact() {
                             <td>05/08/2021</td>
                             <td>05/08/2021</td>
                             <td>
-                                <button><FontAwesomeIcon className='col-sm-2 icon' icon={faEllipsisH}/></button>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <NavLink to='/contact/edit' style={{ textDecoration: 'none' }}>
+                                                <button className="dropdown-item">Modify</button>
+                                            </NavLink>
+                                        </li>
+                                        <li><button className="dropdown-item">Delete</button></li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

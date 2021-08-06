@@ -96,7 +96,37 @@ body {
 				}
 			}
 		}
+
+		.dropdown{
+			button{
+				color: black;
+			}
+		}
 	}
 
-	
+	.form-container{
+		margin-left: 24px;
+		margin-right: 24px;
+
+		form {
+			.row {
+				padding-bottom: 32px;
+			}
+			.form-control, .form-select {
+				border-color: $border-color;
+			}
+
+			.btn-row{
+				float: right;
+				margin-right: 3px;
+				button {
+					background-color: $navbar-background;
+					border: 1px solid $sidebar-header-background;
+					color: rgba($color: rgb(255, 255, 255), $alpha: 1.0);
+					font-weight: bold;
+					width: 80px;
+				}
+			}
+		}
+	}
 }

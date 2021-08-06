@@ -33,7 +33,7 @@ function SideBar() {
                         </li>
 
                         <li>
-                            <NavLink to='/contacts' className='text-link'>
+                            <NavLink to='/contact' className='text-link'>
                                 <div className='row'>
                                     <div className='col-sm-2 icon'>
                                         <FontAwesomeIcon className='col-sm-2 icon' icon={faAddressBook}/>

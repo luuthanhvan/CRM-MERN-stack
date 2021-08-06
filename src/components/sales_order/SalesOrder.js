@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import {NavLink} from 'react-router-dom';
 
 function SalesOrder(){
     const status = ['Created', 'Approved', 'Delivered', 'Cancel'];
@@ -48,7 +49,9 @@ function SalesOrder(){
                 </div>
   
                 <div className='col add-btn'>
-                    <button><FontAwesomeIcon className='col-sm-2 icon' icon={faPlus}/></button>
+                    <NavLink to='/sales_order/create'>
+                        <button><FontAwesomeIcon className='icon' icon={faPlus}/></button>
+                    </NavLink>
                 </div>
             </div>
 
@@ -76,7 +79,17 @@ function SalesOrder(){
                             <td>05/08/2021</td>
                             <td>05/08/2021</td>
                             <td>
-                                <button><FontAwesomeIcon className='col-sm-2 icon' icon={faEllipsisH}/></button>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <NavLink to='/sales_order/edit' style={{ textDecoration: 'none' }}>
+                                                <button className="dropdown-item">Modify</button>
+                                            </NavLink>
+                                        </li>
+                                        <li><button className="dropdown-item">Delete</button></li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
