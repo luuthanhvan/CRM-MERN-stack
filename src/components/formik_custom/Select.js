@@ -7,6 +7,7 @@ function Select({label, name, options, ...rest}){
         <div>
             <label htmlFor={name}>{label}</label>
             <Field as="select" className="form-control" id={name} name={name} {...rest}>
+                <option>Choose {label.toLowerCase()}</option>
                 {options.map(option => {return (
                     <option key={option.value} value={option.value}>
                         {option.key}

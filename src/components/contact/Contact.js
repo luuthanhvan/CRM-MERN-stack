@@ -1,14 +1,22 @@
+import { React, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-// import $ from 'jquery';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import * as ContactService from '../../services/ContactServices';
 
 function Contact() {
-    const leadSources = ['Existing Customer', 'Partner', 'Conference', 'Website', 'Word of mouth', 'Other'];
     const displayCols = ['Name', 'Salutation', 'Lead source', 'Assigned to', 'Created time', 'Updated time'];
+    
+    const [contacts, setContacts] = useState(null);
 
+    useEffect(() => {
+        ContactService.getListOfContacts().then(res => {
+            setContacts(res['data']);
+        });
+    }, []);
+    
     return(
         <div>
             <div className='row content-header'>
@@ -23,7 +31,7 @@ function Contact() {
                         {/* array iteration */}
                         {/* Warning: Each child in a list should have a unique "key" prop. */}
                         {/* Fix: add key prop in option tag */}
-                        {leadSources.map((item) => <option key={Math.random()}>{item}</option>)}
+                        {ContactService.leadSources.map((item) => <option key={Math.random()}>{item.value}</option>)}
                     </select>
                 </div>
 
@@ -64,38 +72,53 @@ function Contact() {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col">
+                                <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value=""/>
+                                </div>
+                            </th>
                             {displayCols.map(item => <th scope="col" key={Math.random()}>{item}</th>)}
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value=""/>
-                                </div>
-                            </td>
-                            <td>Luu Thanh Van</td>
-                            <td>Mrs</td>
-                            <td>Other</td>
-                            <td>Thanh Van</td>
-                            <td>05/08/2021</td>
-                            <td>05/08/2021</td>
-                            <td>
-                                <div className="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li>
-                                            <NavLink to='/contact/edit' style={{ textDecoration: 'none' }}>
-                                                <button className="dropdown-item">Modify</button>
-                                            </NavLink>
-                                        </li>
-                                        <li><button className="dropdown-item">Delete</button></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+                        {!contacts ? <tr><td className="no-data" colSpan="8">No data</td></tr> : 
+                            contacts.map((value) =>
+                                <tr key={Math.random()}>
+                                    <td>
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="checkbox" value=""/>
+                                        </div>
+                                    </td>
+                                    <td>{value.contactName}</td>
+                                    <td>{value.salutation}</td>
+                                    <td>{value.leadSrc}</td>
+                                    <td>{value.assignedTo}</td>
+                                    <td>{value.createdTime}</td>
+                                    <td>{value.updatedTime}</td>
+                                    <td>
+                                        <div className="dropdown">
+                                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <NavLink to={{pathname: '/contact/edit', state: value._id}} style={{ textDecoration: 'none' }}>
+                                                        <button className="dropdown-item">Modify</button>
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <button 
+                                                        className="dropdown-item" 
+                                                        onClick={() => { ContactService.deleteContact(value._id).then(res => console.log(res)) }}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td> 
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
             </div>
