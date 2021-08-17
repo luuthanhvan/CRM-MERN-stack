@@ -9,6 +9,7 @@ router.post('/list', contactsController.getListOfContacts); // get list of conta
 router.get('/:id', contactsController.getContact); // get a contact by contact ID
 router.put('/:id', contactsController.updateContact); // update a contact by contact ID
 router.delete('/:id', contactsController.deleteContact); // delete a contact by contact ID
+router.post('/search', contactsController.findContact);
 
 // router.post('/list', jwtHelper.verifyJwtToken, authController.verifyUser, contactsController.getListOfContacts); // get list of sales order
 // router.post('/delete', contactsController.multiDeleteContact); // delete multi contacts

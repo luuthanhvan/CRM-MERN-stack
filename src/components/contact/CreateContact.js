@@ -1,21 +1,24 @@
-import { React, useState } from 'react';
+import { React } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import ContactForm from './ContactForm';
 
+const SERVER_URL = "http://localhost:5000/contacts";
+// temp data
+const assignedTo = [
+    { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
+    { key: 'Thanh Van', value: 'Thanh Van' },
+];
+
 function CreateContact() {
-    // temp data
-    const assignedTo = [
-        { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
-        { key: 'Thanh Van', value: 'Thanh Van' },
-    ];
-    const SERVER_URL = "http://localhost:5000/contacts";
-    const [submitted, setSubmitted] = useState(false);
+    // useHistory to Programmatically navigate after form submitted
+    const history = useHistory();
     const onSubmit = (contact) => {
         axios.post(SERVER_URL, contact)
             .then(res => res['data'])
             .then(res => {
                 if(res.status === 1){
-                    setSubmitted(true);
+                    history.push("/contact");
             }
         });
     };
@@ -24,8 +27,8 @@ function CreateContact() {
         <div>
             <ContactForm 
                 contact={null}
+                title="Create new contact"
                 onSubmit={onSubmit}
-                submitted={submitted}
                 isEditForm={false}
                 assignedTo={assignedTo}
             />

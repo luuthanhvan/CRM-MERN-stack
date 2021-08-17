@@ -118,13 +118,16 @@ class ContactsController {
         }, 1000);
     }
 
-    // [GET] /search/:contactName - function to find contacts by contact name
+    // [POST] /search - function to find contacts
     findContact(req, res){
-        let contactName = req.params.contactName;
         try {
+            let filterKey = req.body.key,
+                filterValue = req.body.value;
+
             Contacts
-                .find({ contactName : contactName })
+                .find({ [filterKey] : filterValue })
                 .then((contacts) => {
+                    
                     return apiResponse.successResponseWithData(res, 'Success', { contacts: contacts });
                 })
         }catch(err){

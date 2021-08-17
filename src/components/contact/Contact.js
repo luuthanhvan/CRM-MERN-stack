@@ -3,28 +3,50 @@ import axios from 'axios';
 import Filter from './Filter';
 import Table from './Table';
 
+const SERVER_URL = "http://localhost:5000/contacts";
+
+function GetListOfContacts(){
+    return axios.post(`${SERVER_URL}/list`).then(res => res['data']);
+}
+
 function Contact() {
-    const SERVER_URL = "http://localhost:5000/contacts";
-    const [contacts, setContacts] = useState(null);
+    let [contacts, setContacts] = useState(null);
+    let listOfContacts;
 
     useEffect(() => {
-        axios.post(`${SERVER_URL}/list`)
-            .then(res => res['data'])
-            .then(res => { setContacts(res['data']) });
+        listOfContacts = GetListOfContacts();
+        listOfContacts.then(res => { setContacts(res['data']) });
     }, []);
 
     const onDelete = (event) => {
         const contactId = event.target.value;
+        
         axios.delete(`${SERVER_URL}/${contactId}`).then(() => {
-            axios.post(`${SERVER_URL}/list`)
-                .then(res => res['data'])
-                .then(res => { setContacts(res['data']) });
+            listOfContacts = GetListOfContacts();
+            listOfContacts.then(res => { setContacts(res['data']) });
         });
+    }
+
+    const reset = () => {
+        listOfContacts = GetListOfContacts();
+        listOfContacts.then(res => { setContacts(res['data']) });
+    }
+
+    const applyFilter = (event) => {
+        let filterKey = event.target.name,
+            filterValue = event.target.value;
+        
+        axios.post(`${SERVER_URL}/search`, {key: filterKey, value: filterValue})
+            .then(res => res['data'])
+            .then((res) => { setContacts(res['data']) });
     }
 
     return(
         <div>
-            <Filter />
+            <Filter 
+                applyFilter={applyFilter}
+                reset={reset}
+            />
             <Table 
                 contacts={contacts} 
                 onDelete={onDelete}

@@ -1,18 +1,20 @@
 import { React, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import ContactForm from './ContactForm';
 
+const SERVER_URL = "http://localhost:5000/contacts";
+// temp data
+const assignedTo = [
+    { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
+    { key: 'Thanh Van', value: 'Thanh Van' },
+];
+
 function EditContact() {
-    const assignedTo = [
-        { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
-        { key: 'Thanh Van', value: 'Thanh Van' },
-    ];
-    const SERVER_URL = "http://localhost:5000/contacts";
+    const history = useHistory();
     const location = useLocation();
     let contactId = location.state;
     const [contact, setContact] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
     const [createdTime, setCreatedTime] = useState(null); // keep the created time
 
     useEffect(() => {
@@ -32,7 +34,7 @@ function EditContact() {
             .then(res => res['data'])
             .then(res => {
                 if(res.status === 1){
-                    setSubmitted(true);
+                    history.push("/contact");
                 }
             })
     };
@@ -41,8 +43,8 @@ function EditContact() {
         <div>
             <ContactForm 
                 contact={contact}
+                title="Edit the contact"
                 onSubmit={onSubmit}
-                submitted={submitted}
                 isEditForm={true}
                 assignedTo={assignedTo}
             />

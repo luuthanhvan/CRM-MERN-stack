@@ -8,7 +8,7 @@ const Contacts = new Schema({
     phone: { type: String, required: true },
     email: { type: String, required: false },
     organization: { type: String, required: false },
-    dob: { type: String, required: false },
+    dob: { type: Date, required: false },
     leadSrc: { type: String, required: true },
     assignedTo: { type: String, ref: 'User', required: true },
     creator: { type: String, default: 'admin' },
