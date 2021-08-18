@@ -1,57 +1,46 @@
+import { React,useEffect, useState } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
+import SalesOrderForm from './SalesOrderForm';
+import { getSalesOrderById, updateSalesOrder, status, validationSchema } from '../../services/SalesOrderService';
+
+// temp data
+const assignedTo = [
+    { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
+    { key: 'Thanh Van', value: 'Thanh Van' },
+];
+
 function EditSalesOrder() {
+    const history = useHistory();
+    const location = useLocation();
+    let salesOrderId = location.state;
+    const [salesOrder, setSalesOrder] = useState(null);
+    const [createdTime, setCreatedTime] = useState(null); // keep the created time
+    
+    useEffect(() => {
+        getSalesOrderById(salesOrderId).then(salesOrder => {
+            setSalesOrder(salesOrder);
+            setCreatedTime(salesOrder.createdTime);
+        });
+    }, []);
+
+    const onSubmit = (newSalesOrder) => {
+        newSalesOrder.createdTime = createdTime;
+        newSalesOrder.updatedTime = new Date();
+        
+        updateSalesOrder(salesOrderId, newSalesOrder).then(() => history.push("/sales_order"));
+    };
+
     return(
         <div>
-            <div className='row content-header'>
-                <div className='title'>
-                    <span>Edit the sales order</span>
-                </div>
-            </div>
-            <div className='form-container'>
-                <form>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <label>Name</label>
-                            <select className="form-control">
-                                <option>...</option>
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-                            <label>Subject</label>
-                            <input type="text" className="form-control"/>
-                        </div>
-                        <div className="col-md-4">
-                            <label>Status</label>
-                            <select className="form-control">
-                                <option>...</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-4">
-                            <label>Total</label>
-                            <input type="text" className="form-control"/>
-                        </div>
-                        <div className="col-md-4">
-                            <label>Assigned to</label>
-                            <select className="form-control">
-                                <option>...</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div className="row">
-                        <div className="col">
-                            <label>Description</label>
-                            <textarea className="form-control" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div className="row btn-row">
-                        <button className='btn col-md-4'>Save</button>
-                        <button className='btn col-md-4'>Back</button>
-                    </div>
-                </form>
-            </div>
+            <SalesOrderForm 
+                salesOrder={salesOrder}
+                title="Edit the sales order"
+                onSubmit={onSubmit}
+                isEditForm={true}
+                assignedTo={assignedTo}
+                status={status}
+                validationSchema={validationSchema}
+            />
         </div>
     )
 }

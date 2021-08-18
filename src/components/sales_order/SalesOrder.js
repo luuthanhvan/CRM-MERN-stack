@@ -1,100 +1,47 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH, faPlus } from '@fortawesome/free-solid-svg-icons';
-import DateRangePicker from 'react-bootstrap-daterangepicker';
-import 'bootstrap-daterangepicker/daterangepicker.css';
-import {NavLink} from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { status, getListOfSalesOrders, deleteSalesOrder, findSalesOrders } from '../../services/SalesOrderService';
+import Filter from './Filter';
+import Table from './Table';
 
 function SalesOrder(){
-    const status = ['Created', 'Approved', 'Delivered', 'Cancel'];
-    const displayCols = ['Subject', 'Name', 'Status', 'Total', 'Assigned to', 'Created time', 'Updated time'];
+    const [salesOrders, setSalesOrder] = useState(null);
+    useEffect(() => {
+        getListOfSalesOrders().then(salesOrders => { setSalesOrder(salesOrders) });
+    }, []);
+
+    const onDelete = (event) => {
+        const salesOrderId = event.target.value;
+        deleteSalesOrder(salesOrderId).then(() => {
+            getListOfSalesOrders().then(salesOrders => { setSalesOrder(salesOrders) });
+        });
+    }
+
+    const reset = () => {
+        getListOfSalesOrders().then(salesOrders => { setSalesOrder(salesOrders) });
+    }
+
+    const applyFilter = async (event) => {
+        let filterKey = event.target.name,
+            filterValue = event.target.value;
+        
+        try{
+            findSalesOrders(filterKey, filterValue).then(salesOrders => { setSalesOrder(salesOrders) });
+        } catch(err){
+            throw err;
+        }
+    }
 
     return(
         <div>
-            <div className='row content-header'>
-                <div className='col-md-2 title'>
-                    <span>Sales order</span>
-                </div>
-     
-                <div className='col filter'>
-                    <span>Status</span>
-                    <select className="form-select form-select-sm">
-                        {status.map((item) => <option key={Math.random()}>{item}</option>)}
-                    </select>
-                </div>
-
-                <div className='col filter'>
-                    <span>Assigned to</span>
-                    <select className="form-select form-select-sm">
-                        {/* <option>Assigned to</option> */}
-                    </select>
-                </div>
-
-                <div className='col-md-2 filter'>
-                    <span>Created date</span>
-                    <DateRangePicker>
-                        <input type="text" className="form-control"/>
-                    </DateRangePicker>
-                </div>
-
-                <div className='col-md-2 filter'>
-                    <span>Updated date</span>
-                    <DateRangePicker>
-                        <input type="text" className="form-control" />
-                    </DateRangePicker>
-                </div>
-
-                <div className='col-md-2 filter'>
-                    <span>Keyword filter</span>
-                    <input type="text" className="form-control search-text" placeholder='Enter text...'/>
-                </div>
-  
-                <div className='col add-btn'>
-                    <NavLink to='/sales_order/create'>
-                        <button><FontAwesomeIcon className='icon' icon={faPlus}/></button>
-                    </NavLink>
-                </div>
-            </div>
-
-            <div className='content'>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            {displayCols.map(item => <th scope="col" key={Math.random()}>{item}</th>)}
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value=""/>
-                                </div>
-                            </td>
-                            <td>Test</td>
-                            <td>Luu Thanh Van</td>
-                            <td>Cancel</td>
-                            <td>100000</td>
-                            <td>Thanh Van</td>
-                            <td>05/08/2021</td>
-                            <td>05/08/2021</td>
-                            <td>
-                                <div className="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li>
-                                            <NavLink to='/sales_order/edit' style={{ textDecoration: 'none' }}>
-                                                <button className="dropdown-item">Modify</button>
-                                            </NavLink>
-                                        </li>
-                                        <li><button className="dropdown-item">Delete</button></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <Filter 
+                status={status}
+                applyFilter={applyFilter}
+                reset={reset}
+            />
+            <Table
+                salesOrders={salesOrders}
+                onDelete={onDelete}
+            />
         </div>
     )
 }

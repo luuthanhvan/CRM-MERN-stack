@@ -1,11 +1,12 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, createContext } from 'react';
 import { leadSources, getListOfContacts, deleteContact, findContacts } from '../../services/ContactService';
 import Filter from './Filter';
 import Table from './Table';
 
-function Contact() {
-    let [contacts, setContacts] = useState(null);
+export const ContactContext = createContext({});
 
+function Contact() {
+    const [contacts, setContacts] = useState(null);
     useEffect(() => {
         getListOfContacts().then(contacts => { setContacts(contacts) });
     }, []);
@@ -33,17 +34,16 @@ function Contact() {
     }
 
     return(
-        <div>
+        <ContactContext.Provider value={contacts}>
             <Filter
                 leadSources={leadSources}
                 applyFilter={applyFilter}
                 reset={reset}
             />
             <Table 
-                contacts={contacts} 
                 onDelete={onDelete}
             />
-        </div>
+        </ContactContext.Provider>
     );
 }
 

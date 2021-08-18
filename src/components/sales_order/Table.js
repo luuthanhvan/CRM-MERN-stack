@@ -1,13 +1,9 @@
-import { React, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import ContactContext from './Contact';
 
-const displayCols = ['Name', 'Salutation', 'Lead source', 'Assigned to', 'Created time', 'Updated time'];
+const displayCols = ['Subject', 'Name', 'Status', 'Total', 'Assigned to', 'Created time', 'Updated time'];
 
-function Table(props){
-    const { onDelete } = props;
-    const contacts = useContext(ContactContext);
-    
+function Table(props) {
+    const { salesOrders, onDelete } = props;
     return(
         <div className='content'>
             <table className="table">
@@ -23,17 +19,18 @@ function Table(props){
                     </tr>
                 </thead>
                 <tbody>
-                    {(!contacts || contacts.length === 0) ? <tr><td className="no-data" colSpan="8">No data</td></tr> : 
-                        contacts.map((value, index) =>
+                    {(!salesOrders || salesOrders.length === 0) ? <tr><td className="no-data" colSpan="9">No data</td></tr> :
+                        salesOrders.map((value, index) => 
                             <tr key={index}>
                                 <td>
                                     <div className="form-check">
                                         <input className="form-check-input" type="checkbox" value=""/>
                                     </div>
                                 </td>
+                                <td>{value.subject}</td>
                                 <td>{value.contactName}</td>
-                                <td>{value.salutation}</td>
-                                <td>{value.leadSrc}</td>
+                                <td>{value.status}</td>
+                                <td>{value.total}</td>
                                 <td>{value.assignedTo}</td>
                                 <td>{value.createdTime}</td>
                                 <td>{value.updatedTime}</td>
@@ -42,7 +39,7 @@ function Table(props){
                                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li>
-                                                <NavLink to={{pathname: '/contact/edit', state: value._id}} style={{ textDecoration: 'none' }}>
+                                            <NavLink to={{pathname: '/sales_order/edit', state: value._id}} style={{ textDecoration: 'none' }}>
                                                     <button className="dropdown-item">Modify</button>
                                                 </NavLink>
                                             </li>
@@ -56,7 +53,7 @@ function Table(props){
                                             </li>
                                         </ul>
                                     </div>
-                                </td> 
+                                </td>
                             </tr>
                         )
                     }
