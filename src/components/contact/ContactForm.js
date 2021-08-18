@@ -1,36 +1,10 @@
 import { React, useMemo } from 'react';
-import * as Yup from 'yup';
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Formik, Form, } from 'formik';
 import FormControl from '../formik_custom/FormikControl';
 
-const leadSources = [
-    { key: 'Existing Customer', value: 'Existing Customer' },
-    { key: 'Partner', value: 'Partner' },
-    { key: 'Conference', value: 'Conference' },
-    { key: 'Website', value: 'Website' },
-    { key: 'Word of mouth', value: 'Word of mouth' },
-    { key: 'Other', value: 'Other' },
-];
-const salutations = [
-    { key: 'None', value: 'None' },
-    { key: 'Mr.', value: 'Mr.' },
-    { key: 'Mrs.', value: 'Mrs.' },
-    { key: 'Ms.', value: 'Ms.' },
-    { key: 'Dr.', value: 'Dr.' },
-    { key: 'Prof.', value: 'Prof.' },
-];
-const validationSchema = Yup.object({
-    contactName: Yup.string().required("Required"),
-    salutation: Yup.string().required('Required'),
-    phone: Yup.string().required("Required"),
-    email: Yup.string().email('Invalid email format'),
-    leadSrc: Yup.string().required("Required"),
-    assignedTo: Yup.string().required("Required")
-});
-
 function ContactForm(props){
-    const {contact, title, onSubmit, isEditForm, assignedTo} = props;
+    const {contact, title, onSubmit, isEditForm, assignedTo, leadSources, salutations, validationSchema} = props;
         
     const initialValues = useMemo(() => ({
         contactName: contact ? contact.contactName : '',
@@ -40,7 +14,7 @@ function ContactForm(props){
         organization: contact ? contact.organization : '',
         leadSrc: contact ? contact.leadSrc : '',
         assignedTo: contact ? contact.assignedTo : '',
-        dob: contact ? contact.dob : undefined,
+        dob: contact ? new Date(contact.dob) : undefined,
         address: contact ? contact.address : '',
         description: contact ? contact.description : ''
     }), [contact]);

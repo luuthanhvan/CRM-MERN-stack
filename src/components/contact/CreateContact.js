@@ -1,9 +1,8 @@
 import { React } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { storeContact, leadSources, salutations, validationSchema } from '../../services/ContactService';
 import ContactForm from './ContactForm';
 
-const SERVER_URL = "http://localhost:5000/contacts";
 // temp data
 const assignedTo = [
     { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
@@ -14,13 +13,7 @@ function CreateContact() {
     // useHistory to Programmatically navigate after form submitted
     const history = useHistory();
     const onSubmit = (contact) => {
-        axios.post(SERVER_URL, contact)
-            .then(res => res['data'])
-            .then(res => {
-                if(res.status === 1){
-                    history.push("/contact");
-            }
-        });
+        storeContact(contact).then(() => { history.push("/contact") });
     };
 
     return(
@@ -31,6 +24,9 @@ function CreateContact() {
                 onSubmit={onSubmit}
                 isEditForm={false}
                 assignedTo={assignedTo}
+                leadSources={leadSources}
+                salutations={salutations}
+                validationSchema={validationSchema}
             />
         </div> 
     )

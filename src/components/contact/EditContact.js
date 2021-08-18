@@ -1,9 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { getContactById, updateContact, leadSources, salutations, validationSchema } from '../../services/ContactService';
 import ContactForm from './ContactForm';
 
-const SERVER_URL = "http://localhost:5000/contacts";
 // temp data
 const assignedTo = [
     { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
@@ -18,25 +17,17 @@ function EditContact() {
     const [createdTime, setCreatedTime] = useState(null); // keep the created time
 
     useEffect(() => {
-        axios.get(`${SERVER_URL}/${contactId}`)
-            .then(res => res['data'])
-            .then((res) => {
-                setContact(res['data']);
-                setCreatedTime(res['data'].createdTime);
-            })
+        getContactById(contactId).then(contact => {
+            setContact(contact);
+            setCreatedTime(contact.createdTime);
+        });
     }, []);
 
     const onSubmit = (newContact) => {
         newContact.createdTime = createdTime;
         newContact.updatedTime = new Date();
         
-        axios.put(`${SERVER_URL}/${contactId}`, newContact)
-            .then(res => res['data'])
-            .then(res => {
-                if(res.status === 1){
-                    history.push("/contact");
-                }
-            })
+        updateContact(contactId, newContact).then(() => history.push("/contact"));
     };
 
     return(
@@ -47,6 +38,9 @@ function EditContact() {
                 onSubmit={onSubmit}
                 isEditForm={true}
                 assignedTo={assignedTo}
+                leadSources={leadSources}
+                salutations={salutations}
+                validationSchema={validationSchema}
             />
         </div>
     )

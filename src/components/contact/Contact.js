@@ -1,49 +1,41 @@
 import { React, useState, useEffect } from 'react';
-import axios from 'axios';
+import { leadSources, getListOfContacts, deleteContact, findContacts } from '../../services/ContactService';
 import Filter from './Filter';
 import Table from './Table';
 
-const SERVER_URL = "http://localhost:5000/contacts";
-
-function GetListOfContacts(){
-    return axios.post(`${SERVER_URL}/list`).then(res => res['data']);
-}
-
 function Contact() {
     let [contacts, setContacts] = useState(null);
-    let listOfContacts;
 
     useEffect(() => {
-        listOfContacts = GetListOfContacts();
-        listOfContacts.then(res => { setContacts(res['data']) });
+        getListOfContacts().then(contacts => { setContacts(contacts) });
     }, []);
 
     const onDelete = (event) => {
         const contactId = event.target.value;
-        
-        axios.delete(`${SERVER_URL}/${contactId}`).then(() => {
-            listOfContacts = GetListOfContacts();
-            listOfContacts.then(res => { setContacts(res['data']) });
+        deleteContact(contactId).then(() => {
+            getListOfContacts().then(contacts => { setContacts(contacts) });
         });
     }
 
     const reset = () => {
-        listOfContacts = GetListOfContacts();
-        listOfContacts.then(res => { setContacts(res['data']) });
+        getListOfContacts().then(contacts => { setContacts(contacts) });
     }
 
-    const applyFilter = (event) => {
+    const applyFilter = async (event) => {
         let filterKey = event.target.name,
             filterValue = event.target.value;
         
-        axios.post(`${SERVER_URL}/search`, {key: filterKey, value: filterValue})
-            .then(res => res['data'])
-            .then((res) => { setContacts(res['data']) });
+        try{
+            findContacts(filterKey, filterValue).then(contacts => { setContacts(contacts) });
+        } catch(err){
+            throw err;
+        }
     }
 
     return(
         <div>
-            <Filter 
+            <Filter
+                leadSources={leadSources}
                 applyFilter={applyFilter}
                 reset={reset}
             />

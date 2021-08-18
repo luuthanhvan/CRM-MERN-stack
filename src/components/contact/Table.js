@@ -19,7 +19,7 @@ function Table(props){
                     </tr>
                 </thead>
                 <tbody>
-                    {!contacts ? <tr><td className="no-data" colSpan="8">No data</td></tr> : 
+                    {(!contacts || contacts.length === 0) ? <tr><td className="no-data" colSpan="8">No data</td></tr> : 
                         contacts.map((value, index) =>
                             <tr key={index}>
                                 <td>

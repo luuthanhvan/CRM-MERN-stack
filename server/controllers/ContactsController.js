@@ -45,7 +45,7 @@ class ContactsController {
                     .find({})
                     .then((contacts) => {
                             return contacts.length > 0 ? 
-                                apiResponse.successResponseWithData(res, 'Success', contacts) :
+                                apiResponse.successResponseWithData(res, 'Success', {contacts: contacts}) :
                                 apiResponse.successResponseWithData(res, 'Success', );
                     });
             // }
@@ -61,7 +61,7 @@ class ContactsController {
             Contacts
                 .findOne({ _id: contactId })
                 .then((contact) => {
-                    return apiResponse.successResponseWithData(res, 'Success', contact);
+                    return apiResponse.successResponseWithData(res, 'Success', {contact: contact});
                 });
         }catch(err){
             return apiResponse.ErrorResponse(res, err);

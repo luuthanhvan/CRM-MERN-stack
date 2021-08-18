@@ -4,16 +4,9 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import { NavLink } from 'react-router-dom';
 
-const leadSources = [
-    { key: 'Existing Customer', value: 'Existing Customer' },
-    { key: 'Partner', value: 'Partner' },
-    { key: 'Conference', value: 'Conference' },
-    { key: 'Website', value: 'Website' },
-    { key: 'Word of mouth', value: 'Word of mouth' },
-    { key: 'Other', value: 'Other' },
-];
+function Filter(props){
+    const {leadSources, assignedTo, applyFilter, reset} = props;
 
-function Filter({applyFilter, reset}){
     return(
         <div className='row content-header'>
             <div className='col title'>
