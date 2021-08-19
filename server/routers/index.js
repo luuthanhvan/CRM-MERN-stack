@@ -6,7 +6,7 @@ const authRouter = require('./auth');
 function route(app){
     app.use('/contacts', contactsRouter);
     app.use('/sales_order', salesOrderRouter);
-    app.use('/user_management', userRouter);
+    app.use('/users', userRouter);
     app.use('/auth', authRouter);
 }
 
