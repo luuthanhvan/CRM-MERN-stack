@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { status, getListOfSalesOrders, deleteSalesOrder, findSalesOrders } from '../../services/SalesOrderService';
-import Filter from './Filter';
+import Header from './Header';
 import Table from './Table';
 
 function SalesOrder(){
@@ -33,7 +33,7 @@ function SalesOrder(){
 
     return(
         <div>
-            <Filter 
+            <Header 
                 status={status}
                 applyFilter={applyFilter}
                 reset={reset}

@@ -1,6 +1,6 @@
 import { React, useState, useEffect, /*createContext*/ } from 'react';
 import { leadSources, getListOfContacts, deleteContact, findContacts } from '../../services/ContactService';
-import Filter from './Filter';
+import Header from './Header';
 import Table from './Table';
 
 // export const ContactContext = createContext({});
@@ -35,7 +35,7 @@ function Contact() {
 
     return(
         <div>   
-            <Filter
+            <Header
                 leadSources={leadSources}
                 applyFilter={applyFilter}
                 reset={reset}

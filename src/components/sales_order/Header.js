@@ -5,7 +5,7 @@ import Menu from '../filters/Menu';
 import SearchBar from '../filters/SearchBar';
 import DateRange from '../filters/DateRange';
 
-function Filter(props) {
+function Header(props) {
     const {status, assignedTo, applyFilter, reset, deleteMultiple} = props;
 
     return (
@@ -69,4 +69,4 @@ function Filter(props) {
     );
 }
 
-export default Filter;
+export default Header;
