@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faRedo, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import DateRangePicker from 'react-bootstrap-daterangepicker';
-import 'bootstrap-daterangepicker/daterangepicker.css';
 import { NavLink } from 'react-router-dom';
+import Menu from '../filters/Menu';
+import SearchBar from '../filters/SearchBar';
+import DateRange from '../filters/DateRange';
 
 function Filter(props) {
-    const {status, applyFilter, reset} = props;
+    const {status, assignedTo, applyFilter, reset, deleteMultiple} = props;
 
     return (
         <div className='row content-header'>
@@ -14,10 +15,13 @@ function Filter(props) {
             </div>
     
             <div className='col filter'>
-                <span>Status</span>
-                <select className="form-select form-select-sm" name="status" onChange={applyFilter}>
-                    {status.map((item) => <option key={item.key}>{item.value}</option>)}
-                </select>
+                <Menu 
+                    labelName="Status"
+                    className="form-select form-select-sm"
+                    name="status"
+                    data={status}
+                    onChange={applyFilter}
+                />
             </div>
 
             <div className='col filter'>
@@ -28,22 +32,27 @@ function Filter(props) {
             </div>
 
             <div className='col filter'>
-                <span>Created date</span>
-                <DateRangePicker>
-                    <input type="text" className="form-control"/>
-                </DateRangePicker>
+                <DateRange
+                    labelName="Created date"
+                    type="text" 
+                    className="form-control"
+                />
             </div>
 
             <div className='col filter'>
-                <span>Updated date</span>
-                <DateRangePicker>
-                    <input type="text" className="form-control" />
-                </DateRangePicker>
+                <DateRange
+                    labelName="Updated date"
+                    type="text" 
+                    className="form-control"
+                />
             </div>
 
             <div className='col filter'>
-                <span>Keyword filter</span>
-                <input type="text" className="form-control search-text" placeholder='Enter text...'/>
+                <SearchBar 
+                    labelName="Keyword filter"
+                    className="form-control search-text"
+                    placeholder='Enter text...'
+                />
             </div>
 
             <div className='col-3'>

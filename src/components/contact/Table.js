@@ -1,12 +1,12 @@
 import { React, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import ContactContext from './Contact';
+// import {ContactContext} from './Contact';
 
 const displayCols = ['Name', 'Salutation', 'Lead source', 'Assigned to', 'Created time', 'Updated time'];
 
 function Table(props){
-    const { onDelete } = props;
-    const contacts = useContext(ContactContext);
+    const { contacts, onDelete } = props;
+    // const contacts = useContext(ContactContext);
     
     return(
         <div className='content'>
