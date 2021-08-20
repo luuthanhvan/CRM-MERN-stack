@@ -1,17 +1,23 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { storeContact, leadSources, salutations, validationSchema } from '../../services/ContactService';
+import { getListOfUsers } from '../../services/UserService';
 import ContactForm from './ContactForm';
-
-// temp data
-const assignedTo = [
-    { key: 'Luu Thanh Van', value: 'Luu Thanh Van' },
-    { key: 'Thanh Van', value: 'Thanh Van' },
-];
 
 function CreateContact() {
     // useHistory to Programmatically navigate after form submitted
     const history = useHistory();
+    const [assignedTo, setAssignedTo] = useState([]);
+
+    useEffect(() => {
+        getListOfUsers().then(users => {
+            let names = users.map(user => {
+                return { key: user.name, value: user.name };
+            });
+            setAssignedTo(names);
+        });
+    }, []);
+
     const onSubmit = (contact) => {
         storeContact(contact).then(() => { history.push("/contact") });
     };

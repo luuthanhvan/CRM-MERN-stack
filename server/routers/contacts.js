@@ -9,10 +9,10 @@ router.post('/list', contactsController.getListOfContacts); // get list of conta
 router.get('/:id', contactsController.getContact); // get a contact by contact ID
 router.put('/:id', contactsController.updateContact); // update a contact by contact ID
 router.delete('/:id', contactsController.deleteContact); // delete a contact by contact ID
-router.post('/search', contactsController.findContact);
+router.post('/delete', contactsController.multipleDeleteContact); // delete multi contacts
+router.post('/search', contactsController.findContacts);
+router.post('/search/date', contactsController.findContactsByDate);
 
 // router.post('/list', jwtHelper.verifyJwtToken, authController.verifyUser, contactsController.getListOfContacts); // get list of sales order
-// router.post('/delete', contactsController.multiDeleteContact); // delete multi contacts
-// router.get('/search/:contactName', contactsController.findContact); // find a contact by contact name
 
 module.exports = router;

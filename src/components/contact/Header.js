@@ -6,10 +6,9 @@ import SearchBar from '../filters/SearchBar';
 import DateRange from '../filters/DateRange';
 
 function Header(props){
-    const {leadSources, assignedTo, applyFilter, reset, deleteMultiple} = props;
-
+    const {leadSources, assignedTo, applyFilter, applyDateFilter, deleteMultiple, reset, reload} = props;
     return(
-        <div className='row content-header'>
+        <div className='row content-header' key={reload}>
             <div className='col-1 title'>
                 <span>Contact</span>
             </div>
@@ -26,26 +25,33 @@ function Header(props){
                         />
                     </div>
 
-                    <div className='col filter'>
-                        <span>Assigned to</span>
-                        <select className="form-select form-select-sm">
-                            {/* <option>Assigned to</option> */}
-                        </select>
+                    <div className='col'>
+                        <Menu 
+                            labelName="Assigned to"
+                            className="form-select form-select-sm"
+                            name="assignedTo"
+                            data={assignedTo}
+                            onChange={applyFilter}
+                        />
                     </div>
 
-                    <div className='col filter'>
+                    <div className='col'>
                         <DateRange
                             labelName="Created date"
                             type="text" 
                             className="form-control"
+                            name="createdTime"
+                            onSelectDate={applyDateFilter}
                         />
                     </div>
 
-                    <div className='col filter'>
+                    <div className='col'>
                         <DateRange
                             labelName="Updated date"
                             type="text" 
                             className="form-control"
+                            name="updatedTime"
+                            onSelectDate={applyDateFilter}
                         />
                     </div>
                 </div>
@@ -57,6 +63,8 @@ function Header(props){
                         labelName="Keyword filter"
                         className="form-control search-text"
                         placeholder='Enter text...'
+                        name="contactName"
+                        onChange={applyFilter}
                     />
                 </div>
             </div>

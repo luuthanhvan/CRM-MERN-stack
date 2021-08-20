@@ -121,7 +121,11 @@ function ContactForm(props){
                             </div>
 
                             <div className="row btn-row">
-                                <button className='btn col-md-4' type="submit" disabled={!(formik.isValid && formik.dirty)}>
+                                <button 
+                                    className='btn col-md-4' 
+                                    type="submit" 
+                                    disabled={isEditForm ? !formik.isValid : !(formik.isValid && formik.dirty)}
+                                >
                                     {isEditForm ? "Save" : "Create"}
                                 </button>
                                 <NavLink to='/contact' className='btn col-md-4'>Back</NavLink>

@@ -1,12 +1,11 @@
-import { React, useContext } from 'react';
+import { React } from 'react';
 import { NavLink } from 'react-router-dom';
-// import {ContactContext} from './Contact';
+import { datetimeFormat } from '../../services/DatetimeService';
 
 const displayCols = ['Name', 'Salutation', 'Lead source', 'Assigned to', 'Created time', 'Updated time'];
 
 function Table(props){
-    const { contacts, onDelete } = props;
-    // const contacts = useContext(ContactContext);
+    const { contacts, onDelete, onCheckboxChecked } = props;
     
     return(
         <div className='content'>
@@ -15,7 +14,7 @@ function Table(props){
                     <tr>
                         <th scope="col">
                             <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value=""/>
+                                <input className="form-check-input" type="checkbox" />
                             </div>
                         </th>
                         {displayCols.map((item, index) => <th scope="col" key={index}>{item}</th>)}
@@ -28,15 +27,20 @@ function Table(props){
                             <tr key={index}>
                                 <td>
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value=""/>
+                                        <input 
+                                            className="form-check-input" 
+                                            type="checkbox" 
+                                            value={value._id}
+                                            onChange={onCheckboxChecked}
+                                        />
                                     </div>
                                 </td>
                                 <td>{value.contactName}</td>
                                 <td>{value.salutation}</td>
                                 <td>{value.leadSrc}</td>
                                 <td>{value.assignedTo}</td>
-                                <td>{value.createdTime}</td>
-                                <td>{value.updatedTime}</td>
+                                <td>{datetimeFormat(value.createdTime)}</td>
+                                <td>{datetimeFormat(value.updatedTime)}</td>
                                 <td>
                                     <div className="dropdown">
                                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>

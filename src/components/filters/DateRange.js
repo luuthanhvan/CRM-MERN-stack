@@ -2,12 +2,12 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 function DateRange(props){
-    const { labelName, onChange, ...rest } = props;
+    const { labelName, onSelectDate, ...rest } = props;
     return(
         <div>
             <span>{labelName}</span>
-            <DateRangePicker>
-                <input onChange={onChange} {...rest} />
+            <DateRangePicker onEvent={onSelectDate}>
+                <input  {...rest} />
             </DateRangePicker>
         </div>
     );

@@ -52,8 +52,18 @@ async function deleteContact(contactId){
     return res?.data;
 }
 
+async function multipleDelete(contactIds){
+    const {data: res} = await axios.post(`${SERVER_URL}/delete`, contactIds);
+    return res?.data;
+}
+
 async function findContacts(key, value){
     const {data : res} = await axios.post(`${SERVER_URL}/search`, {key: key, value: value});
+    return (res?.data?.contacts || []);
+}
+
+async function findContactsByDate(key, from, to){
+    const {data : res} = await axios.post(`${SERVER_URL}/search/date`, {key: key, from: from, to: to});
     return (res?.data?.contacts || []);
 }
 
@@ -66,5 +76,7 @@ export {
     getContactById,
     updateContact,
     deleteContact,
-    findContacts
+    multipleDelete,
+    findContacts,
+    findContactsByDate
 }

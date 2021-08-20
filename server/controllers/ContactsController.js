@@ -1,5 +1,6 @@
 const Contacts = require('../models/Contacts');
 const apiResponse = require('../helpers/apiResponse');
+const datetime = require('../helpers/datetime');
 
 /* 
 ContactsController contains function handlers to handle request from Contacts page.
@@ -103,9 +104,9 @@ class ContactsController {
     }
 
     // [POST] /delete - function to delete multi contacts information by list of contact ID
-    multiDeleteContact(req, res){
+    multipleDeleteContact(req, res){
         let contactIds = req.body;
-        setTimeout(() => {
+        // setTimeout(() => {
             try{
                 Contacts
                     .remove({ _id: { $in : contactIds }})
@@ -115,11 +116,11 @@ class ContactsController {
             }catch(err){
                 return apiResponse.ErrorResponse(res, err);
             }
-        }, 1000);
+        // }, 1000);
     }
 
     // [POST] /search - function to find contacts
-    findContact(req, res){
+    findContacts(req, res){
         try {
             let filterKey = req.body.key,
                 filterValue = req.body.value;
@@ -128,6 +129,28 @@ class ContactsController {
                 .find({ [filterKey] : filterValue })
                 .then((contacts) => {
                     
+                    return apiResponse.successResponseWithData(res, 'Success', { contacts: contacts });
+                })
+        }catch(err){
+            return apiResponse.ErrorResponse(res, err);
+        }
+    }
+
+    // [POST] /search/date - function to find contacts by date range
+    findContactsByDate(req, res){
+        try {
+            let filterKey = req.body.key,
+                from = req.body.from,
+                to = req.body.to;
+
+            Contacts
+                .find({})
+                .then((contacts) => {
+                    contacts = contacts.filter(contact => {
+                        let date = datetime.dateFormat(contact[filterKey]);
+                        return ( new Date(date) >= new Date(from)) && (new Date(date) <= new Date(to));
+                    });
+
                     return apiResponse.successResponseWithData(res, 'Success', { contacts: contacts });
                 })
         }catch(err){
