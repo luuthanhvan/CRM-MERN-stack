@@ -1,6 +1,6 @@
 const SalesOrder = require('../models/SalesOrder');
-const  { mutipleMongooseToObject } = require('../helpers/mongoose');
 const apiResponse = require('../helpers/apiResponse');
+const datetime = require('../helpers/datetime');
 
 /* 
 SalesOrderController contains function handlers to handle request from Sales order page.
@@ -103,9 +103,9 @@ class SalesOrderController {
     }
 
     // [POST] /delete - function to delete multi sales orders information by list of sales orders ID
-    deleteMultiSalesOrders(req, res){
+    multipleDeleteSalesOrders(req, res){
         let salesOrderIds = req.body;
-        setTimeout(() => {
+        // setTimeout(() => {
             try{
                 SalesOrder
                     .remove({ _id: { $in : salesOrderIds } })
@@ -116,17 +116,38 @@ class SalesOrderController {
             } catch(err){
                 return apiResponse.ErrorResponse(res, err);
             }
-        }, 1000);
+        // }, 1000);
     }
 
     // [POST] /search - function to find sales orders by subject
-    findSalesOrder(req, res){
+    findSalesOrders(req, res){
         try {
             let filterKey = req.body.key,
                 filterValue = req.body.value;
             SalesOrder
-                .find({ filterKey : filterValue })
+                .find({ [filterKey] : filterValue })
                 .then((salesOrders) => {
+                    return apiResponse.successResponseWithData(res, 'Success', { salesOrders: salesOrders });
+                })
+        }catch(err){
+            return apiResponse.ErrorResponse(res, err);
+        }
+    }
+
+    findSalesOrdersByDate(req, res){
+        try {
+            let filterKey = req.body.key,
+                from = req.body.from,
+                to = req.body.to;
+
+            Contacts
+                .find({})
+                .then((salesOrders) => {
+                    salesOrders = salesOrders.filter(salesOrder => {
+                        let date = datetime.dateFormat(salesOrder[filterKey]);
+                        return ( new Date(date) >= new Date(from)) && (new Date(date) <= new Date(to));
+                    });
+
                     return apiResponse.successResponseWithData(res, 'Success', { salesOrders: salesOrders });
                 })
         }catch(err){

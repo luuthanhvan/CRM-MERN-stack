@@ -41,8 +41,18 @@ async function deleteSalesOrder(salesOrderId){
     return res?.data;
 }
 
+async function multipleDelete(salesOrderIds){
+    const {data: res} = await axios.post(`${SERVER_URL}/delete`, salesOrderIds);
+    return res?.data;
+}
+
 async function findSalesOrders(key, value){
     const {data : res} = await axios.post(`${SERVER_URL}/search`, {key: key, value: value});
+    return (res?.data?.salesOrders || []);
+}
+
+async function findSalesOrdersByDate(key, from, to){
+    const {data : res} = await axios.post(`${SERVER_URL}/search/date`, {key: key, from: from, to: to});
     return (res?.data?.salesOrders || []);
 }
 
@@ -54,5 +64,7 @@ export {
     getSalesOrderById,
     updateSalesOrder,
     deleteSalesOrder,
-    findSalesOrders
+    multipleDelete,
+    findSalesOrders,
+    findSalesOrdersByDate
 }

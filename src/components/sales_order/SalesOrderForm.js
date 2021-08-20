@@ -4,7 +4,7 @@ import { Formik, Form, } from 'formik';
 import FormControl from '../formik_custom/FormikControl';
 
 function SalesOrderForm(props){
-    const {salesOrder, title, onSubmit, isEditForm, assignedTo, status, validationSchema} = props;
+    const {salesOrder, title, onSubmit, isEditForm, assignedTo, contactName, status, validationSchema} = props;
         
     const initialValues = useMemo(() => ({
         subject: salesOrder ? salesOrder.subject : '',
@@ -41,9 +41,10 @@ function SalesOrderForm(props){
                                 </div>
                                 <div className="col-md-4">
                                     <FormControl
-                                        control='input'
+                                        control='select'
                                         label='Name'
                                         name='contactName'
+                                        options={contactName}
                                     />
                                 </div>
                                 <div className="col-md-4">

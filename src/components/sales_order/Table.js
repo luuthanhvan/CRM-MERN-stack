@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
+import { datetimeFormat } from '../../services/DatetimeService';
 
 const displayCols = ['Subject', 'Name', 'Status', 'Total', 'Assigned to', 'Created time', 'Updated time'];
 
 function Table(props) {
-    const { salesOrders, onDelete } = props;
+    const { salesOrders, onDelete, onCheckboxChecked } = props;
     return(
         <div className='content'>
             <table className="table">
@@ -11,7 +12,7 @@ function Table(props) {
                     <tr>
                         <th scope="col">
                             <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value=""/>
+                                <input className="form-check-input" type="checkbox"/>
                             </div>
                         </th>
                         {displayCols.map((item, index) => <th scope="col" key={index}>{item}</th>)}
@@ -24,7 +25,12 @@ function Table(props) {
                             <tr key={index}>
                                 <td>
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value=""/>
+                                        <input 
+                                            className="form-check-input" 
+                                            type="checkbox"
+                                            value={value._id}
+                                            onChange={onCheckboxChecked}
+                                        />
                                     </div>
                                 </td>
                                 <td>{value.subject}</td>
@@ -32,8 +38,8 @@ function Table(props) {
                                 <td>{value.status}</td>
                                 <td>{value.total}</td>
                                 <td>{value.assignedTo}</td>
-                                <td>{value.createdTime}</td>
-                                <td>{value.updatedTime}</td>
+                                <td>{datetimeFormat(value.createdTime)}</td>
+                                <td>{datetimeFormat(value.updatedTime)}</td>
                                 <td>
                                     <div className="dropdown">
                                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>

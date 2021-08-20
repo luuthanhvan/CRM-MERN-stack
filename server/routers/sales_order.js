@@ -9,8 +9,9 @@ router.post('/list', salesOrderController.getListOfSalesOrders); // get list of 
 router.get('/:id', salesOrderController.getSalesOrder); // get a sale order
 router.put('/:id', salesOrderController.updateSalesOrder); // update a sale order
 router.delete('/:id', salesOrderController.deleteSalesOrder); // delete a sale order
-// router.post('/delete', salesOrderController.deleteMultiSalesOrders); // delete multi sales orders
-router.post('/search', salesOrderController.findSalesOrder); // find sales order by contact name
+router.post('/delete', salesOrderController.multipleDeleteSalesOrders); // delete multi sales orders
+router.post('/search', salesOrderController.findSalesOrders); // find sales order by contact name
+router.post('/search/date', salesOrderController.findSalesOrdersByDate);
 
 // router.post('/list', jwtHelper.verifyJwtToken, authController.verifyUser, salesOrderController.getListOfSalesOrders); // get list of sales order
 module.exports = router;

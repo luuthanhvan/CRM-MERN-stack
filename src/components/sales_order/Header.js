@@ -6,10 +6,10 @@ import SearchBar from '../filters/SearchBar';
 import DateRange from '../filters/DateRange';
 
 function Header(props) {
-    const {status, assignedTo, applyFilter, reset, deleteMultiple} = props;
+    const {status, assignedTo, applyFilter, applyDateFilter, deleteMultiple, reset, reload} = props;
 
     return (
-        <div className='row content-header'>
+        <div className='row content-header' key={reload}>
             <div className='col-2 title'>
                 <span>Sales order</span>
             </div>
@@ -25,10 +25,13 @@ function Header(props) {
             </div>
 
             <div className='col filter'>
-                <span>Assigned to</span>
-                <select className="form-select form-select-sm">
-                    {/* <option>Assigned to</option> */}
-                </select>
+                <Menu 
+                    labelName="Assigned to"
+                    className="form-select form-select-sm"
+                    name="assignedTo"
+                    data={assignedTo}
+                    onChange={applyFilter}
+                />
             </div>
 
             <div className='col filter'>
@@ -36,6 +39,8 @@ function Header(props) {
                     labelName="Created date"
                     type="text" 
                     className="form-control"
+                    name="createdTime"
+                    onSelectDate={applyDateFilter}
                 />
             </div>
 
@@ -44,6 +49,8 @@ function Header(props) {
                     labelName="Updated date"
                     type="text" 
                     className="form-control"
+                    name="updatedTime"
+                    onSelectDate={applyDateFilter}
                 />
             </div>
 
@@ -52,6 +59,8 @@ function Header(props) {
                     labelName="Keyword filter"
                     className="form-control search-text"
                     placeholder='Enter text...'
+                    name="contactName"
+                    onChange={applyFilter}
                 />
             </div>
 
@@ -61,7 +70,7 @@ function Header(props) {
                         <button><FontAwesomeIcon className='icon' icon={faPlus}/></button>
                     </NavLink>
                     <button className="col-2" onClick={reset}><FontAwesomeIcon className='icon' icon={faRedo}/></button>
-                    <button className="col-2"><FontAwesomeIcon className='icon' icon={faTrashAlt}/></button>
+                    <button className="col-2" onClick={deleteMultiple}><FontAwesomeIcon className='icon' icon={faTrashAlt}/></button>
                 </div>
                 
             </div>
