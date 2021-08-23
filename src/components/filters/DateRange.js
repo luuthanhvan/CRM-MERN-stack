@@ -6,7 +6,7 @@ function DateRange(props){
     return(
         <div>
             <span>{labelName}</span>
-            <DateRangePicker onEvent={onSelectDate}>
+            <DateRangePicker onApply={onSelectDate}>
                 <input  {...rest} />
             </DateRangePicker>
         </div>

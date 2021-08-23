@@ -2,15 +2,24 @@ import { React, useState, useEffect } from 'react';
 import { leadSources, getListOfContacts, deleteContact, multipleDelete, findContacts, findContactsByDate } from '../../services/ContactService';
 import { getListOfUsers } from '../../services/UserService';
 import { dateFormat } from '../../services/DatetimeService';
-import Header from './Header';
+import Header from '../shared/Header';
 import Table from './Table';
+import Filter from './Filter';
+import ButtonBar from './ButtonBar';
+import ConfirmationDialog from './ConfirmationDialog';
+import { Modal } from 'bootstrap';
+import $ from 'jquery';
 
 function Contact() {
     const [contacts, setContacts] = useState(null);
     const [assignedTo, setAssignedTo] = useState([]);
-    const [reload, setReload] = useState(false);
     
     let contactIds = [];
+    let filterData = {
+        leadSources : leadSources, 
+        assignedTo: assignedTo
+    };
+
 
     useEffect(() => {
         getListOfContacts().then(contacts => { setContacts(contacts) });
@@ -24,33 +33,34 @@ function Contact() {
 
     const onDelete = (event) => {
         const contactId = event.target.value;
-        deleteContact(contactId).then(() => {
-            getListOfContacts().then(contacts => { setContacts(contacts) });
+        // show confirmation modal
+        let modal = new Modal($("#deleteDialog"));
+        modal.show();
+        $("#confirmBtn").on('click', function(){
+            deleteContact(contactId).then(() => {
+                getListOfContacts().then(contacts => { setContacts(contacts) });
+            });
+            modal.hide();
         });
     }
 
     const reset = () => {
         getListOfContacts().then(contacts => { setContacts(contacts) });
-        setReload(!reload); // set the reload to re-render the header component
     }
 
-    const applyFilter = async (event) => {
-        let filterKey = event.target.name,
-            filterValue = event.target.value;
+    const applyFilter = async (event, picker) => {
+        let filterKey = event.target.name;
         
         try{
-            findContacts(filterKey, filterValue).then(contacts => { setContacts(contacts) });
-        } catch(err){
-            throw err;
-        }
-    }
-
-    const applyDateFilter = (event, picker) => {
-        let filterKey = event.target.name,
-            from = dateFormat(picker.startDate),
-            to = dateFormat(picker.endDate);
-        try{
-            findContactsByDate(filterKey, from, to).then(contacts => { setContacts(contacts) });
+            if(picker){
+                let from = dateFormat(picker.startDate),
+                    to = dateFormat(picker.endDate);
+                findContactsByDate(filterKey, from, to).then(contacts => { setContacts(contacts) });
+            }
+            else {
+                let filterValue = event.target.value;
+                findContacts(filterKey, filterValue).then(contacts => { setContacts(contacts) });
+            }
         } catch(err){
             throw err;
         }
@@ -65,24 +75,29 @@ function Contact() {
     }
 
     const deleteMultiple = () => {
-        multipleDelete(contactIds).then(() => { reset() })
+        let modal = new Modal($("#deleteDialog"));
+        modal.show();
+        $("#confirmBtn").on('click', function(){
+            multipleDelete(contactIds).then(() => { reset() })
+            modal.hide();
+        });
     }
 
     return(
         <div>
             <Header
-                leadSources={leadSources}
-                assignedTo={assignedTo}
-                applyFilter={applyFilter}
-                applyDateFilter={applyDateFilter}
-                deleteMultiple={deleteMultiple}
-                reset={reset}
-                reload={reload}
+                title={<span>Contact</span>}
+                filter={<Filter data={filterData} onApply={applyFilter}/>}
+                buttonBar={<ButtonBar onReset={reset} onMassDelete={deleteMultiple}/>}
             />
             <Table
                 contacts={contacts}
                 onDelete={onDelete}
                 onCheckboxChecked={onCheckboxChecked}
+            />
+            <ConfirmationDialog 
+                title="Confirmation"
+                content="Do you want to delete the contact?"
             />
         </div>
     );
