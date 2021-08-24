@@ -4,16 +4,16 @@ import DateRange from '../filters/DateRange';
 
 function Filter(props){
     const { values = {}, options, onApply } = props;
-    return (
+    return(
         <div className='row'>
             <div className='col'>
                 <Menu 
-                    labelName="Lead source"
+                    labelName="Status"
                     className="form-select form-select-sm"
-                    name="leadSrc"
-                    data={options.leadSources}
+                    name="status"
+                    data={options.status}
                     onChange={onApply}
-                    value={values.leadSrc}
+                    value={values.status}
                 />
             </div>
 

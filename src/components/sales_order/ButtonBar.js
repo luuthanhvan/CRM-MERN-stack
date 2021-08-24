@@ -6,7 +6,7 @@ function ButtonBar(props){
     const { onReset, onMassDelete } = props;
     return(
         <div className="row btn-row">
-            <NavLink to='/contact/create' className="col-3">
+            <NavLink to='/sales_order/create' className="col-3">
                 <button><FontAwesomeIcon className='icon' icon={faPlus}/></button>
             </NavLink>
             <button className="col-3" onClick={onReset}><FontAwesomeIcon className='icon' icon={faRedo}/></button>

@@ -6,16 +6,25 @@ import Header from '../shared/Header';
 import Table from './Table';
 import Filter from './Filter';
 import ButtonBar from './ButtonBar';
-import ConfirmationDialog from './ConfirmationDialog';
+import ConfirmationDialog from '../shared/ConfirmationDialog';
 import { Modal } from 'bootstrap';
 import $ from 'jquery';
+
+const defaultFilterValues = {
+    leadSrc: '',
+    assignedTo: '',
+    createdTime: {},
+    updatedTime: {},
+    contactName: ''
+};
 
 function Contact() {
     const [contacts, setContacts] = useState(null);
     const [assignedTo, setAssignedTo] = useState([]);
+    const [filterValues, setFilterValues] = useState(defaultFilterValues);
     
     let contactIds = [];
-    let filterData = {
+    let filterOptions = {
         leadSources : leadSources, 
         assignedTo: assignedTo
     };
@@ -46,6 +55,7 @@ function Contact() {
 
     const reset = () => {
         getListOfContacts().then(contacts => { setContacts(contacts) });
+        setFilterValues(defaultFilterValues);
     }
 
     const applyFilter = async (event, picker) => {
@@ -56,10 +66,12 @@ function Contact() {
                 let from = dateFormat(picker.startDate),
                     to = dateFormat(picker.endDate);
                 findContactsByDate(filterKey, from, to).then(contacts => { setContacts(contacts) });
+                setFilterValues(values => ({...values, [filterKey]: {startDate: from, endDate: to}}));
             }
             else {
                 let filterValue = event.target.value;
                 findContacts(filterKey, filterValue).then(contacts => { setContacts(contacts) });
+                setFilterValues(values => ({...values, [filterKey]: filterValues}));
             }
         } catch(err){
             throw err;
@@ -87,7 +99,7 @@ function Contact() {
         <div>
             <Header
                 title={<span>Contact</span>}
-                filter={<Filter data={filterData} onApply={applyFilter}/>}
+                filter={<Filter values={filterValues} options={filterOptions} onApply={applyFilter}/>}
                 buttonBar={<ButtonBar onReset={reset} onMassDelete={deleteMultiple}/>}
             />
             <Table
